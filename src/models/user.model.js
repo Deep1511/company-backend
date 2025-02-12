@@ -25,6 +25,19 @@ const userSchema = new Schema(
       trim: true,
       index: true,
     },
+    avatar: {
+      type: String, //cloudinary url
+      required: true,
+    },
+    coverImage: {
+      type: String,
+    },
+    watchHistroy: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Video",
+      },
+    ],
     password: {
       type: String,
       required: [true, "Password is required"],
@@ -33,12 +46,13 @@ const userSchema = new Schema(
       type: String,
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
-  this.password = bcrypt.hash(this.password, 10);
+
+  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
@@ -52,6 +66,7 @@ userSchema.methods.generateAccessToken = function () {
       _id: this.id,
       email: this.email,
       username: this.username,
+      fullName: this.fullName,
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
@@ -70,4 +85,4 @@ userSchema.methods.generateRefreshToken = function () {
     }
   );
 };
-export const User = mongoose.Model("User", userSchema);
+export const User = mongoose.model("User", userSchema);
