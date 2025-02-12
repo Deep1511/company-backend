@@ -11,5 +11,9 @@
   ],
   "author": "deep",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.0"
+  }
 }
