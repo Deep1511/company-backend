@@ -88,6 +88,6 @@ const registerUser = asyncHandler(async (req, res) => {
   //9. retrun res
   return res
     .status(201)
-    .json(new ApiResponse(200, createdUser, "User registered Successfully"));
+    .json(new ApiResponse(200, createdUser, "User registered successfully"));
 });
 export { registerUser };
